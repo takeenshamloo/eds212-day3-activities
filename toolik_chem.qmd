@@ -1,0 +1,60 @@
+---
+title: "toolik_chem"
+author: "Takeen Shamloo"
+format: html
+---
+
+```{r}
+# Load libraries
+library(tidyverse)
+library(here)
+library(janitor)
+```
+
+## Read/clean data ----
+
+```{r}
+toolik_lake_data <- read.csv(here::here("data", "2011_Kling_Akchem.csv"), na.strings = c(".", "NA")) |> clean_names()
+head(toolik_lake_data)
+```
+
+### Create subset of data ----
+
+```{r}
+inlet_biochem <- toolik_lake_data |>
+  filter(str_detect(site, "(?i)toolik inlet")) |>
+  select(c(p_h, doc_u_m, tdn_u_m))
+inlet_biochem
+```
+
+### Find mean of each column in our subset ----
+
+```{r}
+# From scratch
+mean <- rep(0, ncol(inlet_biochem))
+for (i in 1:ncol(inlet_biochem)){
+  tempSum <- 0
+  for (j in inlet_biochem[[i]]){
+    if (is.na(j) == TRUE){
+      mean[i] <- mean[i] + 1 # storing the number of NA's removed (if any)
+    }else{
+      tempSum <- tempSum + j # here is the sum of the column excluding NA's 
+    }
+  }
+  
+  mean[i] <- tempSum / (length(inlet_biochem[[i]]) - mean[i]) # The addition of minus mean[i] is in-case there were NA's in the column data.
+}
+mean
+
+```
+
+### Using Apply ----
+```{r}
+apply(X = inlet_biochem, MARGIN = 2, FUN = mean, na.rm = TRUE)
+```
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+---
+title: "conditionals_loops"
+author: "Takeen Shamloo"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+
+## Day 3 Activity ----
+
+```{r}
+# Load libraries
+library(stringr)
+```
+
+### Task 1 ----
+
+```{r}
+pm2_5 <- 48
+
+if (pm2_5 < 100){
+  print("Low to moderate risk")
+} else if (pm2_5 < 150) {
+  print("Unhealthy for sensitive groups")
+} else{
+  print("Health risk present")
+}
+```
+
+### Task 2 ----
+
+```{r}
+species <- "blue whale"
+
+if (str_detect(species, "whale")){
+  print("You found a whale!")
+}
+```
+
+### Task 3 ----
+
+```{r}
+base_burrito <- 6.50
+main_ingredient <- "veggie"
+
+
+if (str_detect(main_ingredient, "chicken")) {
+  print(paste("Your price is", base_burrito + 3.00))
+} else if (str_detect(main_ingredient, "steak")){
+  print(paste("Your price is", base_burrito + 3.25))
+} else{
+  print(paste("Your price is", base_burrito))
+}
+```
+
+### Task 4 ----
+
+```{r}
+fish <- c(8, 10, 12, 23)
+for (i in seq_along(fish)){
+  print(paste0(round((fish[i]/sum(fish)), 2) * 100, "% of your tank are ", c("goldfish", "tetras", "guppies", "mollies")[i]))
+}
+```
+
+### Task 5 ----
+
+```{r}
+for (i in seq_along(month.name)){
+  print(paste(month.name[i], "is month", i))
+  
+}
+```
